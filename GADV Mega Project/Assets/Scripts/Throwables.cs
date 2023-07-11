@@ -15,7 +15,7 @@ public class Throwables : MonoBehaviour
     void Start()
     {
         throwableObj = this.gameObject;
-        rb = this.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         lr = GetComponent<LineRenderer>();
     }
 
