@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4963154256383849269}
   - component: {fileID: 4963154256383849268}
   - component: {fileID: 4963154256383849259}
+  - component: {fileID: 1292621946725463251}
   m_Layer: 0
   m_Name: ropesegment
   m_TagString: Untagged
@@ -173,6 +174,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &1292621946725463251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154256383849257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963154256727957476
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,6 +199,7 @@ GameObject:
   - component: {fileID: 4963154256727957472}
   - component: {fileID: 4963154256727957479}
   - component: {fileID: 4963154256727957478}
+  - component: {fileID: 3636477250098540816}
   m_Layer: 0
   m_Name: ropesegment (3)
   m_TagString: Untagged
@@ -321,6 +335,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.08}
   m_Size: {x: 0.16, y: 0.16}
   m_Direction: 0
+--- !u!114 &3636477250098540816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154256727957476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963154256876556763
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +493,7 @@ GameObject:
   - component: {fileID: 4963154256903708379}
   - component: {fileID: 4963154256903708378}
   - component: {fileID: 4963154256903708377}
+  - component: {fileID: 2284449722946324070}
   m_Layer: 0
   m_Name: ropesegment (2)
   m_TagString: Untagged
@@ -602,6 +629,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &2284449722946324070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154256903708383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963154257336219980
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +654,7 @@ GameObject:
   - component: {fileID: 4963154257336219976}
   - component: {fileID: 4963154257336219983}
   - component: {fileID: 4963154257336219982}
+  - component: {fileID: 3490668042362649307}
   m_Layer: 0
   m_Name: ropesegment (1)
   m_TagString: Untagged
@@ -750,6 +790,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.16, y: 0.16}
   m_Direction: 0
+--- !u!114 &3490668042362649307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154257336219980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963154257472913625
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +947,7 @@ GameObject:
   - component: {fileID: 4963154257955552204}
   - component: {fileID: 4963154257955552195}
   - component: {fileID: 4963154257955552194}
+  - component: {fileID: 3546983916271177650}
   m_Layer: 0
   m_Name: ropesegment (4)
   m_TagString: Untagged
@@ -1030,3 +1083,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.08}
   m_Size: {x: 0.16, y: 0.16}
   m_Direction: 0
+--- !u!114 &3546983916271177650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154257955552192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

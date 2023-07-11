@@ -14,7 +14,7 @@ public class Throwables : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        throwableObj = this.gameObject;
+        throwableObj = gameObject;
         rb = GetComponent<Rigidbody2D>();
         lr = GetComponent<LineRenderer>();
     }
@@ -22,34 +22,22 @@ public class Throwables : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && throwableObj.transform.parent != null)
-        {
-            CalculateVector();
-            UpdateArrow();
-        }
-      
-    }
-
-    private void OnMouseDown()
-    {
         if (throwableObj.transform.parent != null)
         {
-            SetArrow();
-            Debug.Log("Down");
+            if (Input.GetMouseButton(0))
+            {
+                CalculateVector();
+                SetArrow();
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                RemoveArrow();
+                Throw();
+                Debug.Log("Up");
+            }
         }
-       
     }
 
-    private void OnMouseUp()
-    {
-        if(throwableObj.transform.parent != null)
-        {
-            RemoveArrow();
-            Throw();
-            Debug.Log("Up");
-        }
-        
-    }
 
     void CalculateVector()
     {
@@ -71,17 +59,8 @@ public class Throwables : MonoBehaviour
     {
         lr.positionCount = 2;
         lr.SetPosition(0, throwableObj.transform.position);
-        lr.SetPosition(1, throwableObj.transform.position + throwingVector.normalized);
+        lr.SetPosition(1, throwableObj.transform.position + throwingVector.normalized * 2);
         lr.enabled = true;
-    }
-
-    void UpdateArrow()
-    {
-        if (lr.enabled)
-        {
-            lr.SetPosition(0, throwableObj.transform.position);
-            lr.SetPosition(1, throwableObj.transform.position + throwingVector.normalized * 2);
-        }
     }
 
     void RemoveArrow()
