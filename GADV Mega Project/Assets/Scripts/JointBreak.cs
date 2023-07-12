@@ -33,7 +33,7 @@ public class JointBreak : MonoBehaviour
             {
                 BreakHinge();
                 Debug.Log("Broken by " + collision.gameObject.name);
-                OnCollisionEvent.Invoke(collision);
+                OnCollisionEvent?.Invoke(collision);
             }
         }
             

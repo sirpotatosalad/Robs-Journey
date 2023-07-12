@@ -18,7 +18,7 @@ public class RopeController : MonoBehaviour
         foreach (GameObject child in children)
         {
             JointBreak jointBreak = child.GetComponent<JointBreak>();
-            //jointBreak.OnCollisionEvent += HandleCollisionEvent;
+            jointBreak.OnCollisionEvent += HandleCollisionEvent;
         }
 
     }
@@ -37,6 +37,11 @@ public class RopeController : MonoBehaviour
             if (collisionHandlers != null)
             {
                 children.Add(child.gameObject);
+                Debug.Log("Child added: " + child.gameObject.name);
+            }
+            else
+            {
+                Debug.Log("No JointBreak Component found in: " + child.gameObject.name);
             }
         }
     }
@@ -54,9 +59,9 @@ public class RopeController : MonoBehaviour
         }
     }
 
-    void HandleCollisionEvent()
+    void HandleCollisionEvent(Collision2D collision)
     {
-
+        Debug.Log("Collision event successfully handled");
     }
 
 }
