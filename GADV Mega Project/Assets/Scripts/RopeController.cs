@@ -5,18 +5,21 @@ using UnityEngine;
 public class RopeController : MonoBehaviour
 {
     private GameObject parentObj;
-    private int noOfChild;
     private List<GameObject> children;
     // Start is called before the first frame update
     void Start()
     {
         parentObj = gameObject;
-        noOfChild = transform.childCount - 1;
         children = new List<GameObject>();
 
         GetAllChildren();
         Debug.Log(children.Count);
-            
+
+        foreach (GameObject child in children)
+        {
+            JointBreak jointBreak = child.GetComponent<JointBreak>();
+            //jointBreak.OnCollisionEvent += HandleCollisionEvent;
+        }
 
     }
 
@@ -26,9 +29,9 @@ public class RopeController : MonoBehaviour
         
     }
 
-    public void GetAllChildren()
+    void GetAllChildren()
     {
-        foreach (Transform child in parentObj.GetComponentInChildren<Transform>())
+        foreach (Transform child in parentObj.transform)
         {
             JointBreak collisionHandlers = child.GetComponent<JointBreak>();
             if (collisionHandlers != null)
@@ -36,6 +39,24 @@ public class RopeController : MonoBehaviour
                 children.Add(child.gameObject);
             }
         }
+    }
+
+    public void DisableCollisonScripts()
+    {
+        foreach (GameObject child in children)
+        {
+            JointBreak collisionHandlers = child.GetComponent<JointBreak>();
+            if (collisionHandlers != null)
+            {
+                collisionHandlers.enabled = false;
+                Debug.Log("Rope break disabled");
+            }
+        }
+    }
+
+    void HandleCollisionEvent()
+    {
+
     }
 
 }

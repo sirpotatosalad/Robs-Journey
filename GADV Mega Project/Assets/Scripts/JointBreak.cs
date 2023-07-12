@@ -7,9 +7,11 @@ public class JointBreak : MonoBehaviour
 
     private HingeJoint2D hj;
     private DistanceJoint2D dj;
-    //private bool isBroken = false;
-    //not sure whether i should implement this or not
     private GameObject parentObj;
+
+
+    public delegate void CollisionEventHandler(Collision2D collision);
+    public event CollisionEventHandler OnCollisionEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,8 @@ public class JointBreak : MonoBehaviour
 
     }
 
+
+
     // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -29,6 +33,7 @@ public class JointBreak : MonoBehaviour
             {
                 BreakHinge();
                 Debug.Log("Broken by " + collision.gameObject.name);
+                OnCollisionEvent.Invoke(collision);
             }
         }
             
