@@ -141,7 +141,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: -0.08}
-  m_ConnectedAnchor: {x: 0, y: 0.052873198}
+  m_ConnectedAnchor: {x: 0, y: 0.052873056}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -165,7 +165,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.08}
-  m_ConnectedAnchor: {x: 0, y: -0.29017067}
+  m_ConnectedAnchor: {x: 0, y: -0.29017115}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -491,6 +491,7 @@ GameObject:
   - component: {fileID: 4963154256903708376}
   - component: {fileID: 4963154256903708324}
   - component: {fileID: 4963154256903708379}
+  - component: {fileID: 6158507071519889397}
   - component: {fileID: 4963154256903708378}
   - component: {fileID: 4963154256903708377}
   - component: {fileID: 2284449722946324070}
@@ -584,6 +585,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.16, y: 0.16}
   m_Direction: 0
+--- !u!114 &6158507071519889397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154256903708383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0e38ae477adb4cb52aedcd4a35629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &4963154256903708378
 Rigidbody2D:
   serializedVersion: 4
@@ -765,7 +778,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: -0.08}
-  m_ConnectedAnchor: {x: 0, y: 0.08156141}
+  m_ConnectedAnchor: {x: 0, y: 0.08156148}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -814,6 +827,7 @@ GameObject:
   - component: {fileID: 4963154257472913572}
   - component: {fileID: 4963154257472913627}
   - component: {fileID: 4963154257472913626}
+  - component: {fileID: 5354936608087510661}
   m_Layer: 0
   m_Name: Rope
   m_TagString: Untagged
@@ -932,8 +946,20 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0.60219, y: 4.2700725}
   m_AutoConfigureDistance: 1
-  m_Distance: 5.856458
+  m_Distance: 5.8564587
   m_MaxDistanceOnly: 0
+--- !u!114 &5354936608087510661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963154257472913625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf520ebd2f84124083f3ebbb088cf94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963154257955552192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1084,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: -0.08}
-  m_ConnectedAnchor: {x: -0.0021510206, y: 0.52017117}
+  m_ConnectedAnchor: {x: -0.002150918, y: 0.52017117}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

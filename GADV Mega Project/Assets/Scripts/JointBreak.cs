@@ -28,6 +28,7 @@ public class JointBreak : MonoBehaviour
             if (collision.relativeVelocity.magnitude >= 15f)
             {
                 BreakHinge();
+                Debug.Log("Broken by " + collision.gameObject.name);
             }
         }
             
