@@ -17,7 +17,7 @@ public class GrabObjects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        layerIndex = LayerMask.NameToLayer("Object");
+        layerIndex = LayerMask.NameToLayer("Throwable");
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class GrabObjects : MonoBehaviour
         //setting raycast to rayPos gameObject
         RaycastHit2D hitInfo = Physics2D.Raycast(rayPos.position, transform.right, rayDist);
 
-        //check if raycast is colliding with a gameobject, and whether it is in the 'Objects' layer
+        //check if raycast is colliding with a gameobject in the correct layer
         if (hitInfo.collider != null && hitInfo.collider.gameObject.layer == layerIndex) 
         { 
             //'grab' gameobject when hands are empty

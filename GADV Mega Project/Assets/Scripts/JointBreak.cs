@@ -24,10 +24,10 @@ public class JointBreak : MonoBehaviour
 
 
 
-    // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Throwable"))
+
+        if (collision.gameObject.CompareTag("Throwable") && enabled)
         {
             if (collision.relativeVelocity.magnitude >= 15f)
             {

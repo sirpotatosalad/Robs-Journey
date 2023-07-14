@@ -9,17 +9,19 @@ public class PlayerController : MonoBehaviour
     public float fallSpeed = 10.0f;
     public float frictionForce = 2.5f;
 
+    private float horizontal;
     private float coyoteTime = 0.2f;
     private float coyoteTimeCount;
     private float jumpDelay = 0.2f;
     private float jumpDelayCount;
+    private bool isFacingRight = true;
 
     private Rigidbody2D rb;
 
     private bool isHurt;
 
     private GameObject playerObj;
-    private Vector2 playerPos;
+    private Vector2 spawnPos;
 
     [SerializeField] private LayerMask groundLayer;
     private BoxCollider2D boxCollider;
@@ -32,21 +34,20 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         playerObj = GameObject.Find("Player");
-        playerPos = playerObj.transform.position;
+        spawnPos = playerObj.transform.position;
     }
     // Update is called once per frame
     void Update()
     {
-
-        //moving left and right
-        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
-        // friction will be added via inspector menu in Unity. 
+        horizontal = Input.GetAxisRaw("Horizontal");
         Jump();
+        Flip();
     }
 
     void FixedUpdate()
     {
-
+        //moving left and right
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
 
@@ -55,13 +56,18 @@ public class PlayerController : MonoBehaviour
         // for now, just tp's player back to starting position when hitting a hazard.
         if (obj.gameObject.tag == "WorldBound")
         {
-            playerObj.transform.position = playerPos;
+            playerObj.transform.position = spawnPos;
 
         }
     }
+
     //method for jumping and aerial mechanics
     void Jump()
     {
+
+        // the next two if checks are for jump delay and coyote time
+        // this is just to make the jumping feel more responsive and forgiving
+
         if (isGrounded())
         {
             coyoteTimeCount = coyoteTime;
@@ -98,6 +104,17 @@ public class PlayerController : MonoBehaviour
             //need to find a better value for quick fall.
             //feels too slow at speed / 2, normal speed feels a tad too fast but i'm not sure
             rb.velocity = new Vector2(rb.velocity.x, -(fallSpeed));
+        }
+    }
+
+    private void Flip()
+    {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f )
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
         }
     }
 

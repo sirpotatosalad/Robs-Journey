@@ -61,6 +61,7 @@ public class RopeController : MonoBehaviour
 
     void HandleCollisionEvent(Collision2D collision)
     {
+        DisableCollisonScripts();
         Debug.Log("Collision event successfully handled");
     }
 
