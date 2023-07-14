@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float jumpDelay = 0.2f;
     private float jumpDelayCount;
     private bool isFacingRight = true;
+    private Animator anim;
 
     private Rigidbody2D rb;
 
@@ -34,12 +35,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         playerObj = GameObject.Find("Player");
+        anim = GetComponent<Animator>();
         spawnPos = playerObj.transform.position;
     }
     // Update is called once per frame
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+
+        anim.SetBool("isRunning", horizontal != 0);
+
         Jump();
         Flip();
     }
@@ -121,7 +126,7 @@ public class PlayerController : MonoBehaviour
     //this checks if the player is grounded
     private bool isGrounded()
     {
-        //casts a box that extends slightly beneath the player to check if they are 'touching' the ground
+        //casts a box the size of player's box collider beneath player gameobject 
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         //returns false if the collider is colliding with a gameObject 
         return raycastHit.collider != null;

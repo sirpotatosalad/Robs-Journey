@@ -7,6 +7,7 @@ public class GrabObjects : MonoBehaviour
     [SerializeField]
     private Transform grabPos;
     [SerializeField]
+    //initial ray position for grab detection
     private Transform rayPos;
     [SerializeField]
     private float rayDist;
@@ -32,6 +33,7 @@ public class GrabObjects : MonoBehaviour
             //'grab' gameobject when hands are empty
             if (Input.GetKeyDown(KeyCode.E) && grabbedObj == null)
             {
+
                 //get gameObj infront of collider
                 grabbedObj = hitInfo.collider.gameObject;
                 //set state of grabbed obj's rigidbody to kinematic
@@ -40,6 +42,7 @@ public class GrabObjects : MonoBehaviour
                 grabbedObj.transform.position = grabPos.position;
                 //set grabbed obj as child to player
                 grabbedObj.transform.SetParent(transform);
+                Debug.Log("Object grabbed");
             }
             //release gameObj in hand when grab key is pressed
             else if (Input.GetKeyDown(KeyCode.E))
@@ -48,6 +51,7 @@ public class GrabObjects : MonoBehaviour
                 grabbedObj.GetComponent<Rigidbody2D>().isKinematic = false;
                 grabbedObj.transform.SetParent(null);
                 grabbedObj = null;
+                Debug.Log("Object dropped");
             }
         }
 
