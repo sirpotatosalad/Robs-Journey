@@ -7,7 +7,8 @@ public class HealthController : MonoBehaviour
     [SerializeField]
     private float startingHealth;
     public float currentHealth { get; private set; }
-
+    private Animator anim;
+    private bool isDead = false;
 
 
 
@@ -16,6 +17,7 @@ public class HealthController : MonoBehaviour
     void Start()
     {
         currentHealth = startingHealth;
+        anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(float dmgTaken)
@@ -24,11 +26,17 @@ public class HealthController : MonoBehaviour
 
         if (currentHealth > 0)
         {
+            anim.SetTrigger("isHurt");
             //player alive
         }
         else
         {
-            //player dead
+            if (!isDead)
+            {
+                anim.SetTrigger("isDead");
+                this.GetComponent<PlayerController>().enabled = false;
+                isDead = true;
+            }
         }
     }
 
