@@ -8,6 +8,7 @@ TagManager:
   - WorldBound
   - Throwable
   - Enemy
+  - PhysObj
   layers:
   - Default
   - TransparentFX
