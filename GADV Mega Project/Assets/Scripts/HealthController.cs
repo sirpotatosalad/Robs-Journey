@@ -7,8 +7,11 @@ public class HealthController : MonoBehaviour
     [SerializeField]
     private float startingHealth;
     public float currentHealth { get; private set; }
+
     private Animator anim;
-    private bool isDead = false;
+    public bool isDead = false;
+
+    [SerializeField] private float iFrameDuration;
 
 
 
@@ -27,7 +30,7 @@ public class HealthController : MonoBehaviour
         if (currentHealth > 0)
         {
             anim.SetTrigger("isHurt");
-            //player alive
+            StartCoroutine(IFrames());
         }
         else
         {
@@ -40,11 +43,11 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    public void Update()
+    private IEnumerator IFrames()
     {
-        if (Input.GetKeyDown(KeyCode.J)) 
-        {
-            TakeDamage(1);
-        }
+        Physics2D.IgnoreLayerCollision(8, 9, true);
+        yield return new WaitForSeconds(iFrameDuration);    
+        Physics2D.IgnoreLayerCollision(8,9, false);
     }
+
 }

@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 914766756248641928}
   - component: {fileID: 914766756248641932}
   - component: {fileID: 6891668114399141494}
+  - component: {fileID: 3499020140341257514}
   - component: {fileID: 914766756248641922}
+  - component: {fileID: 8172150290156993658}
   - component: {fileID: 914766756248641933}
   - component: {fileID: 914766756248641923}
   m_Layer: 8
@@ -37,6 +39,7 @@ Transform:
   m_Children:
   - {fileID: 914766756821433274}
   - {fileID: 914766756396649648}
+  - {fileID: 7638555470937025075}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,6 +153,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  isDead: 0
+  iFrameDuration: 1
+--- !u!114 &3499020140341257514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914766756248641931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e150b6a9de412724b960805595195dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwMultiplier: 10
+  grabObj: {fileID: 0}
+  maxMouseDist: 10
+  numberOfPoints: 20
+  timeBetweenPoints: 0.1
 --- !u!114 &914766756248641922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,8 +186,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabPos: {fileID: 914766756396649648}
   rayPos: {fileID: 914766756821433274}
+  throwPos: {fileID: 0}
   rayDist: 2
   grabbedObj: {fileID: 0}
+  isGrabbing: 0
+  isThrowing: 0
+--- !u!114 &8172150290156993658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914766756248641931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e150b6a9de412724b960805595195dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwMultiplier: 15
+  grabObj: {fileID: 0}
+  maxMouseDist: 4.5
+  numberOfPoints: 20
+  timeBetweenPoints: 0.1
 --- !u!50 &914766756248641933
 Rigidbody2D:
   serializedVersion: 4
@@ -269,4 +311,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 914766756248641935}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1824442968631391744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7638555470937025075}
+  m_Layer: 8
+  m_Name: ThrowPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7638555470937025075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824442968631391744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 914766756248641935}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

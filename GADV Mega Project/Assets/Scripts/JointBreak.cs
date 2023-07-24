@@ -29,7 +29,7 @@ public class JointBreak : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Throwable") && enabled)
         {
-            if (collision.relativeVelocity.magnitude >= 15f)
+            if (collision.relativeVelocity.magnitude >= 5f)
             {
                 BreakHinge();
                 Debug.Log("Broken by " + collision.gameObject.name);

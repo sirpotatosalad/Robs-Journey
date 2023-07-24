@@ -11,13 +11,16 @@ public class SwitchBehaviourController : MonoBehaviour
 
     [SerializeField] bool isDoorOpenSwitch;
     [SerializeField] bool isDoorCloseSwitch;
+    [SerializeField] bool isPlayerInteractable;
 
     private float switchSizeY;
     private Vector3 switchUpPos;
     private Vector3 switchDownPos;
     private float switchSpeed = 1f;
     private float switchDelay = 0.2f;
-    bool isUsingSwitch = false;
+    private bool isUsingSwitch = false;
+    private bool isPhysObjOnSwitch = false;
+
 
 
     // Start is called before the first frame update
@@ -35,7 +38,7 @@ public class SwitchBehaviourController : MonoBehaviour
         {
             MoveSwitchDown();
         }
-        else if (!isUsingSwitch)
+        else if (!isUsingSwitch && !isPhysObjOnSwitch)
         {
             MoveSwitchUp();
         }
@@ -59,8 +62,10 @@ public class SwitchBehaviourController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("PhysObj"))
+        if (collision.CompareTag("PhysObj"))
         {
+            Debug.Log("Obj on switch");
+            isPhysObjOnSwitch = true;
             isUsingSwitch = !isUsingSwitch;
 
             if (isDoorOpenSwitch && !doorBehaviour.doorIsOpen)
@@ -71,11 +76,39 @@ public class SwitchBehaviourController : MonoBehaviour
             {
                 doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
             }
+
+            return;
+        }
+
+
+        if (collision.CompareTag("Player") && isPlayerInteractable)
+        {
+            if (!isPhysObjOnSwitch)
+            {
+                isUsingSwitch = !isUsingSwitch;
+
+                if (isDoorOpenSwitch && !doorBehaviour.doorIsOpen)
+                {
+                    doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
+                }
+                else if (isDoorCloseSwitch && doorBehaviour.doorIsOpen)
+                {
+                    doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
+                }
+            }
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+
+        if(collision.CompareTag("PhysObj"))
+        {
+            Debug.Log("Obj off switch");
+            isPhysObjOnSwitch = false;
+        }
+
         if(collision.CompareTag("Player"))
         {
             StartCoroutine(SwitchPressDelay(switchDelay));
