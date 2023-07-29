@@ -26,7 +26,6 @@ public class ObjectInteractionController : MonoBehaviour
     private Vector3 throwingVector;
     private Rigidbody2D rb;
     private LineRenderer lr;
-    private GameObject throwableObj;
 
     [SerializeField]
     private float maxMouseDist = 10.0f;
@@ -71,11 +70,18 @@ public class ObjectInteractionController : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
+                if (Input.GetMouseButtonDown(1))
+                {
+                    lr.enabled = false;
+                    Debug.Log("Cancelled Throw");
+                    return;
+                }
+
                 CalculateVector();
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                RemoveArrow();
+                lr.enabled = false;
                 ThrowObject();
                 isThrowing = false;
                 isGrabbing = false;
@@ -88,11 +94,20 @@ public class ObjectInteractionController : MonoBehaviour
 
     void ToggleThrowing()
     {
-        isThrowing = true;
-        if(isGrabbing) 
+
+        lr = grabbedObj.GetComponent<LineRenderer>();
+
+        isThrowing = !isThrowing;
+        if(isThrowing) 
         {
             grabbedObj.transform.position = throwPos.position;
             Debug.Log("Ready to throw");
+        }
+        else
+        {
+            lr.enabled = false;
+            grabbedObj.transform.position = grabPos.position;
+            Debug.Log("Returned to grab");
         }
         
     }
@@ -186,9 +201,6 @@ public class ObjectInteractionController : MonoBehaviour
     }
 
 
-    void RemoveArrow()
-    {
-        lr.enabled = false;
-    }
+
 
 }

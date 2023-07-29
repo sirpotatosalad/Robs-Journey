@@ -13,9 +13,7 @@ GameObject:
   - component: {fileID: 914766756248641928}
   - component: {fileID: 914766756248641932}
   - component: {fileID: 6891668114399141494}
-  - component: {fileID: 3499020140341257514}
   - component: {fileID: 914766756248641922}
-  - component: {fileID: 8172150290156993658}
   - component: {fileID: 914766756248641933}
   - component: {fileID: 914766756248641923}
   m_Layer: 8
@@ -153,25 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  fallBoundary: -20
   isDead: 0
   iFrameDuration: 1
---- !u!114 &3499020140341257514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914766756248641931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e150b6a9de412724b960805595195dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwMultiplier: 10
-  grabObj: {fileID: 0}
-  maxMouseDist: 10
-  numberOfPoints: 20
-  timeBetweenPoints: 0.1
 --- !u!114 &914766756248641922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,21 +173,8 @@ MonoBehaviour:
   grabbedObj: {fileID: 0}
   isGrabbing: 0
   isThrowing: 0
---- !u!114 &8172150290156993658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914766756248641931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e150b6a9de412724b960805595195dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwMultiplier: 15
-  grabObj: {fileID: 0}
-  maxMouseDist: 4.5
+  throwMultiplier: 10
+  maxMouseDist: 10
   numberOfPoints: 20
   timeBetweenPoints: 0.1
 --- !u!50 &914766756248641933

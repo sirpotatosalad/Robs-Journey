@@ -18,11 +18,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
 
     private Rigidbody2D rb;
-
-    private bool isHurt;
-
     private GameObject playerObj;
-    private Vector2 spawnPos;
 
     [SerializeField] private LayerMask groundLayer;
     private BoxCollider2D boxCollider;
@@ -36,7 +32,6 @@ public class PlayerController : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         playerObj = GameObject.Find("Player");
         anim = GetComponent<Animator>();
-        spawnPos = playerObj.transform.position;
     }
     // Update is called once per frame
     void Update()
@@ -53,17 +48,6 @@ public class PlayerController : MonoBehaviour
     {
         //moving left and right
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-    }
-
-
-    void OnCollisionEnter2D(Collision2D obj)
-    {
-        // for now, just tp's player back to starting position when hitting a hazard.
-        if (obj.gameObject.tag == "WorldBound")
-        {
-            playerObj.transform.position = spawnPos;
-
-        }
     }
 
     //method for jumping and aerial mechanics

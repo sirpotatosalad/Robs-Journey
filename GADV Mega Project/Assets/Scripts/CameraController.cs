@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,19 +16,25 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerSpeed = Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.x);
+        if (player != null)
+        {
 
-        if (Mathf.Abs(playerSpeed) > 0f)
-        {
-            lookAhead = Mathf.Lerp(lookAhead, (lookAheadDist * player.localScale.x), Time.deltaTime * camFollowSpeed);
-            transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
-           
+            float playerSpeed = Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.x);
+
+            if (Mathf.Abs(playerSpeed) > 0f)
+            {
+                lookAhead = Mathf.Lerp(lookAhead, (lookAheadDist * player.localScale.x), Time.deltaTime * camFollowSpeed);
+                transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
+
+            }
+            else
+            {
+                float lookAheadCentred = 0f;
+                lookAhead = Mathf.Lerp(lookAhead, lookAheadCentred, Time.deltaTime * camCentreSpeed);
+                transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
+            }
         }
-        else
-        {
-            float lookAheadCentred = 0f;
-            lookAhead = Mathf.Lerp(lookAhead, lookAheadCentred, Time.deltaTime * camCentreSpeed);
-            transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
-        }
+       
     }
+
 }
