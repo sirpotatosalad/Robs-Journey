@@ -7,11 +7,17 @@ public class DoorBehaviourController : MonoBehaviour
 
     [SerializeField]
     private float doorOffset = 5f;
+    [SerializeField]
+    InventoryManager.AllItems requiredKey;
 
     public bool doorIsOpen = false;
+    public bool isInteractable;
+    public bool isLocked;
+
     Vector3 doorClosedPos;
     Vector3 doorOpenPos;
     private float doorSpeed = 10f;
+    private bool playerCanInteract = false;
 
 
     // Start is called before the first frame update
@@ -24,6 +30,24 @@ public class DoorBehaviourController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.E) && playerCanInteract)
+        {
+            if (isInteractable && HasKey(requiredKey))
+            {
+                isLocked = false;
+                doorIsOpen = true;
+            }
+            else if (isLocked)
+            {
+                Debug.Log("Door is locked");
+            }
+            else
+            {
+                Debug.Log("Door not interactable");
+            }
+        }
+
         if (doorIsOpen)
         {
             OpenDoor();
@@ -32,6 +56,18 @@ public class DoorBehaviourController : MonoBehaviour
         {
             CloseDoor();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Player @ door");
+        playerCanInteract = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("Player left door");
+        playerCanInteract = false;
     }
 
     void OpenDoor()
@@ -50,5 +86,17 @@ public class DoorBehaviourController : MonoBehaviour
         }
     }
 
-    
+    public bool HasKey(InventoryManager.AllItems itemRequired)
+    {
+        if (InventoryManager.inventoryManager.invItems.Contains(itemRequired))
+        {
+            return true;
+        }
+        else 
+        { 
+            return false; 
+        }
+    }
+
+
 }

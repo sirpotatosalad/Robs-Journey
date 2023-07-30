@@ -40,13 +40,14 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isRunning", horizontal != 0);
 
+
+
         Jump();
         Flip();
     }
 
     void FixedUpdate()
     {
-        //moving left and right
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
@@ -115,4 +116,5 @@ public class PlayerController : MonoBehaviour
         //returns false if the collider is colliding with a gameObject 
         return raycastHit.collider != null;
     }
+
 }

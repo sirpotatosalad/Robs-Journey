@@ -12,6 +12,8 @@ public class GameMaster : MonoBehaviour
 
     [SerializeField]
     private GameObject gameOverUi;
+    [SerializeField]
+    private bool enableDevMode = false;
 
     public float spawnDelay = 2.0f;
     public Transform playerPrefab;
@@ -40,6 +42,12 @@ public class GameMaster : MonoBehaviour
 
         timerTime = 0;
         anim = playerPrefab.GetComponent<Animator>();
+
+        if (!enableDevMode)
+        {
+            playerPrefab.position = spawnPoint.position;
+        }
+        
     }
 
     void Update()
@@ -56,8 +64,6 @@ public class GameMaster : MonoBehaviour
         
 
     }
-
-    
 
     public static void KillPlayer(HealthController player)
     {
@@ -85,9 +91,9 @@ public class GameMaster : MonoBehaviour
 
     }
 
-    public void Quit()
+    public void QuitToMenu()
     {
-        Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
     }
 
     public void Retry()
