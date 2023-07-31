@@ -21,7 +21,7 @@ public class GameMaster : MonoBehaviour
     public Transform spawnPoint;
     public TextMeshProUGUI timerText;
 
-    private float timerTime;
+    private float timerTime = 0;
     
     private Animator anim;
 
@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour
 
     void Awake()
     {
+        // making the gamemaster a singleton
         if (gm == null)
         {
             gm = this;
@@ -40,9 +41,9 @@ public class GameMaster : MonoBehaviour
             Destroy(gameObject);
         }
 
-        timerTime = 0;
         anim = playerPrefab.GetComponent<Animator>();
 
+        
         if (!enableDevMode)
         {
             playerPrefab.position = spawnPoint.position;
@@ -52,14 +53,15 @@ public class GameMaster : MonoBehaviour
 
     void Update()
     {
-        //timer behaviour
-        // will work it out to only reset the timer when all lives are taken.
+        //timer only runs when player is alive
         if (!player.isDead)
         {
+            // adds time passed to timerTime, which is a variable to store time value in seconds
             timerTime += Time.deltaTime;
+            // converts the numerical value of timerTime into a TimeSpan object, which is a c# structure that represents time
             TimeSpan time = TimeSpan.FromSeconds(timerTime);
+            // takes the TimeSpan obj and converts it into string, with a format of minutes:seconds:milliseconds
             timerText.text = time.ToString(@"mm\:ss\:fff");
-            timerTime += Time.deltaTime;
         }
         
 
@@ -84,12 +86,15 @@ public class GameMaster : MonoBehaviour
         Debug.Log("Player respawned");
     }
 
+
+    //this coroutine to kill the player is in place simply to allow the death animation to play out before the player 'dies'
     public static IEnumerator KillPlayerWithDelay(HealthController player)
     {
         yield return new WaitForSeconds(2f);
         Debug.Log("Killed Player");
 
     }
+
 
     public void QuitToMenu()
     {

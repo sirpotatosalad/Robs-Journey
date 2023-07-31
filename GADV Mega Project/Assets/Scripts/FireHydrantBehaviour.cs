@@ -8,8 +8,14 @@ public class FireHydrantBehaviour : MonoBehaviour
     [SerializeField] private int damageAmount = 1;
 
     private bool isActive = false;
+    private bool isDamagingPlayer = false;
+
+
+
     [SerializeField]
     private GameObject waterSpout;
+    [SerializeField]
+    private HealthController playerPrefab;
 
     private void Start()
     {       
@@ -19,12 +25,12 @@ public class FireHydrantBehaviour : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(isActive);
+        
     }
 
     private IEnumerator ActivateWaterSpout()
     {
-        while (true)
+        while (!playerPrefab.isDead)
         {
             isActive = true;
             waterSpout.SetActive(true); // Enable the water spout collider.
@@ -35,16 +41,27 @@ public class FireHydrantBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D player)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         Debug.Log("collision detected");
-
-        if (isActive && player.CompareTag("Player"))
+        Debug.Log(isDamagingPlayer);
+        Debug.Log(isActive);
+        while (isActive && collision.CompareTag("Player") && !isDamagingPlayer)
         {
             Debug.Log("Taking damage!");
-            HealthController healthController = player.GetComponent<HealthController>();
-            healthController.TakeDamage(damageAmount);
+            StartCoroutine(DamageDelay());
 
         }
+
     }
+
+
+    private IEnumerator DamageDelay()
+    {
+        isDamagingPlayer = true;
+        yield return new WaitForSeconds(0.15f);
+        playerPrefab.TakeDamage(damageAmount);
+        isDamagingPlayer = false;
+    }
+
 }

@@ -151,12 +151,18 @@ public class ObjectInteractionController : MonoBehaviour
 
     void CalculateVector()
     {
+        // assigning the initial mouse position when left mouse button is held down
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //taking the distance between the mouse and its initial position
         Vector2 distance = mousePos - transform.position;
 
-        float normalisedDist = Mathf.Clamp01(distance.magnitude / maxMouseDist);
-        float throwForce = throwMultiplier * normalisedDist;
+        // this block allows the player to throw at varying forces based on how far they pull back the mouse
+        // preventing the player from pulling back too much by clamping the distance they can pull the mouse back
+        float clampedDist = Mathf.Clamp01(distance.magnitude / maxMouseDist);
+        // the throwforce is then calculated by multiplying the distance with a throwMultiplier
+        float throwForce = throwMultiplier * clampedDist;
 
+        // normalising the distance calculated and calculating the vector force to throw
         throwingVector = -distance.normalized * throwForce;
 
         DrawTrajectory();
@@ -166,15 +172,23 @@ public class ObjectInteractionController : MonoBehaviour
     {
         lr = grabbedObj.GetComponent<LineRenderer>();
 
+        // makes an array of based on the number of points given
+        // here, the numberOfPoints variable sort of acts like the total number of points for the entire vector i.e., the length
         Vector3[] trajectoryPoints = new Vector3[numberOfPoints];
 
+        // using a for loop to iterate through the array in order to calculate the distance (in this case in time) between each point
+        // similar to numberOfPoints var, timeBetweenPoints acts like the distance between each point measured in time
         for (int i = 0; i < numberOfPoints; i++)
         {
+            // here the time value to be given to the CalculateTrajectoryPoint function is calculated by multiplying
+            // i to the time between each point
             float time = timeBetweenPoints * i;
+            // the next 2 lines will simply assign the Vector2 of each calculated point to each index of the array
             Vector2 trajectoryPoint = CalculateTrajectoryPoint(time);
             trajectoryPoints[i] = new Vector3(trajectoryPoint.x, trajectoryPoint.y, 0f);
         }
-
+        
+        //these next few lines then assign the position of each point using lineRenderer
         lr.positionCount = numberOfPoints;
         lr.SetPositions(trajectoryPoints);
         lr.enabled = true;
@@ -186,6 +200,8 @@ public class ObjectInteractionController : MonoBehaviour
         Vector2 velocity = throwingVector;
         Vector2 gravity = Physics2D.gravity;
 
+        // with the help of some prior knowledge of physics and ChatGPT, I make use of the kinetic equation of motion for an object in free fall
+        // after calculation, it simply returns the Vector2 for that specific frame.
         Vector2 pos = initPos + velocity * time + 0.5f * gravity * time * time;
         return pos;
     }
