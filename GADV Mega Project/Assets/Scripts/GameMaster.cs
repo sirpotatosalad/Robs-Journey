@@ -21,12 +21,15 @@ public class GameMaster : MonoBehaviour
     public Transform spawnPoint;
     public TextMeshProUGUI timerText;
 
-    private float timerTime = 0;
+    private float timerTime = 0f;
     
     private Animator anim;
 
     public HealthController player;
-    
+    private Transform currentCheckpoint;
+
+    [SerializeField]
+    private CheckpointBehaviour triggerDetection;
 
 
     void Awake()
@@ -48,7 +51,13 @@ public class GameMaster : MonoBehaviour
         {
             playerPrefab.position = spawnPoint.position;
         }
-        
+
+       
+        triggerDetection.OnTriggerEvent += OnTriggerEventOccured;
+
+        currentCheckpoint = spawnPoint;
+
+
     }
 
     void Update()
@@ -81,9 +90,14 @@ public class GameMaster : MonoBehaviour
     public IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(spawnDelay);
-        playerPrefab.position = spawnPoint.position;
+        playerPrefab.position = currentCheckpoint.position;
         player.RespawnPlayer();
         Debug.Log("Player respawned");
+    }
+
+    private void OnTriggerEventOccured(Collider2D collision)
+    {
+        currentCheckpoint = collision.transform;
     }
 
 
@@ -105,6 +119,12 @@ public class GameMaster : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         StartCoroutine(RespawnPlayer());
+    }
+
+    public void LastCheckpoint()
+    {
+        StartCoroutine(RespawnPlayer());
+        gameObject.SetActive(false);
     }
 
 }
