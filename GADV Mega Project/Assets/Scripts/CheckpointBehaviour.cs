@@ -11,7 +11,8 @@ public class CheckpointBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GetComponent<Collider2D>().enabled = false;
+            this.GetComponent<Collider2D>().enabled = false;
+            Debug.Log("Disabled checkpoint collider");
             OnTriggerEvent?.Invoke(collision);
         }
     }

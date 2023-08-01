@@ -98,6 +98,7 @@ public class GameMaster : MonoBehaviour
     private void OnTriggerEventOccured(Collider2D collision)
     {
         currentCheckpoint = collision.transform;
+        Debug.Log("new checkpoint set");
     }
 
 
@@ -124,7 +125,7 @@ public class GameMaster : MonoBehaviour
     public void LastCheckpoint()
     {
         StartCoroutine(RespawnPlayer());
-        gameObject.SetActive(false);
+        gameOverUi.SetActive(false);
     }
 
 }
