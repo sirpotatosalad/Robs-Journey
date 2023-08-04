@@ -25,7 +25,7 @@ public class FireHydrantBehaviour : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private IEnumerator ActivateWaterSpout()
@@ -39,13 +39,12 @@ public class FireHydrantBehaviour : MonoBehaviour
             waterSpout.SetActive(false); // Disable the water spout collider.
             yield return new WaitForSeconds(activationInterval);
         }
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         Debug.Log("collision detected");
-        Debug.Log(isDamagingPlayer);
-        Debug.Log(isActive);
         while (isActive && collision.CompareTag("Player") && !isDamagingPlayer)
         {
             Debug.Log("Taking damage!");
@@ -59,7 +58,7 @@ public class FireHydrantBehaviour : MonoBehaviour
     private IEnumerator DamageDelay()
     {
         isDamagingPlayer = true;
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
         playerPrefab.TakeDamage(damageAmount);
         isDamagingPlayer = false;
     }

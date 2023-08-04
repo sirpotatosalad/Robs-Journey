@@ -53,7 +53,8 @@ public class ObjectInteractionController : MonoBehaviour
                 ToggleThrowing();
             }
             else if (Input.GetKeyDown(KeyCode.E))
-            { 
+            {
+                lr.enabled = false;
                 ReleaseObject();
             }
               
@@ -66,17 +67,10 @@ public class ObjectInteractionController : MonoBehaviour
             }
         }
 
-        if (isThrowing)
+        if (isThrowing && !Input.GetMouseButton(1))
         {
             if (Input.GetMouseButton(0))
             {
-                if (Input.GetMouseButtonDown(1))
-                {
-                    lr.enabled = false;
-                    Debug.Log("Cancelled Throw");
-                    return;
-                }
-
                 CalculateVector();
             }
             else if (Input.GetMouseButtonUp(0))

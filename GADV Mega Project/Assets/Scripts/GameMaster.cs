@@ -26,7 +26,7 @@ public class GameMaster : MonoBehaviour
     private Animator anim;
 
     public HealthController player;
-    private Transform currentCheckpoint;
+    public Transform currentCheckpoint;
 
     [SerializeField]
     private CheckpointBehaviour triggerDetection;
@@ -92,17 +92,17 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSeconds(spawnDelay);
         playerPrefab.position = currentCheckpoint.position;
         player.RespawnPlayer();
+        gameOverUi.SetActive(false);
         Debug.Log("Player respawned");
     }
 
     private void OnTriggerEventOccured(Collider2D collision)
     {
-        currentCheckpoint = collision.transform;
-        Debug.Log("new checkpoint set");
+        Debug.Log("new checkpoint set to: " + currentCheckpoint);
     }
 
 
-    //this coroutine to kill the player is in place simply to allow the death animation to play out before the player 'dies'
+    //this coroutine to kill the player is in place to allow the death animation to play out before the player 'dies'
     public static IEnumerator KillPlayerWithDelay(HealthController player)
     {
         yield return new WaitForSeconds(2f);
@@ -119,13 +119,15 @@ public class GameMaster : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        StartCoroutine(RespawnPlayer());
     }
 
     public void LastCheckpoint()
     {
+        if (currentCheckpoint != spawnPoint)
+        {
+            Debug.Log("teleporting player to last checkpoint");
+        }
         StartCoroutine(RespawnPlayer());
-        gameOverUi.SetActive(false);
     }
 
 }
