@@ -12,6 +12,8 @@ public class GameMaster : MonoBehaviour
 
     [SerializeField]
     private GameObject gameOverUi;
+    [SerializeField] 
+    private GameObject pauseUi;
     [SerializeField]
     private bool enableDevMode = false;
 
@@ -31,6 +33,7 @@ public class GameMaster : MonoBehaviour
     [SerializeField]
     private CheckpointBehaviour triggerDetection;
 
+    private bool isPaused;
 
     void Awake()
     {
@@ -63,7 +66,7 @@ public class GameMaster : MonoBehaviour
     void Update()
     {
         //timer only runs when player is alive
-        if (!player.isDead)
+        if (!player.isDead && !isPaused)
         {
             // adds time passed to timerTime, which is a variable to store time value in seconds
             timerTime += Time.deltaTime;
@@ -73,6 +76,20 @@ public class GameMaster : MonoBehaviour
             timerText.text = time.ToString(@"mm\:ss\:fff");
         }
         
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+            if (isPaused)
+            {
+                pauseUi.SetActive(true);
+            }
+            else
+            {
+                pauseUi.SetActive(false);
+            }
+        }
+
+
 
     }
 

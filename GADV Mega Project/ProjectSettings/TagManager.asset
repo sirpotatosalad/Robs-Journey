@@ -11,6 +11,7 @@ TagManager:
   - PhysObj
   - Keys
   - Checkpoint
+  - OneWayPlatform
   layers:
   - Default
   - TransparentFX

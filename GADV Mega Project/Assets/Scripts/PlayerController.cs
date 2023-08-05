@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 10.0f;
     public float jumpForce = 15.0f;
-    public float fallSpeed = 10.0f;
+    public float fallSpeed = 5.0f;
     public float frictionForce = 2.5f;
 
     private float horizontal;
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
     private BoxCollider2D boxCollider;
+    private GameObject currentPlatform;
 
 
 
@@ -44,11 +45,36 @@ public class PlayerController : MonoBehaviour
 
         Jump();
         Flip();
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (currentPlatform != null)
+            {
+                StartCoroutine(DisablePlatformCollision());
+            }
+        }
+
     }
 
     void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentPlatform = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("OneWayPlatform"))
+        {
+            currentPlatform = null;
+        }
     }
 
     //method for jumping and aerial mechanics
@@ -89,12 +115,8 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCount = 0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !isGrounded())
-        {
-            //need to find a better value for quick fall.
-            //feels too slow at speed / 2, normal speed feels a tad too fast but i'm not sure
-            rb.velocity = new Vector2(rb.velocity.x, -(fallSpeed));
-        }
+
+
     }
 
     private void Flip()
@@ -115,6 +137,15 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         //returns false if the collider is colliding with a gameObject 
         return raycastHit.collider != null;
+    }
+
+    private IEnumerator DisablePlatformCollision()
+    {
+        BoxCollider2D platformCollider = currentPlatform.GetComponent<BoxCollider2D>();
+
+        Physics2D.IgnoreCollision(boxCollider, platformCollider);
+        yield return new WaitForSeconds(1);
+        Physics2D.IgnoreCollision(boxCollider, platformCollider, false);
     }
 
 }
