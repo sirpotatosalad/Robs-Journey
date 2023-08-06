@@ -13,19 +13,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892721487322678060, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.054382864
+      value: 0.054383155
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892721487743640295, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.07854157
       objectReference: {fileID: 0}
     - target: {fileID: 1892721487887687706, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -0.0013084783
+      value: -0.0013087279
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892721487887687706, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.49016953
       objectReference: {fileID: 0}
     - target: {fileID: 1892721488175877240, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.07823961
+      value: 0.078239754
       objectReference: {fileID: 0}
     - target: {fileID: 1892721488175877241, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -0.29017162
+      value: -0.29017067
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892721488403298917, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1892721488403298923, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_LocalScale.x
@@ -33,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892721488454516349, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_Distance
-      value: 9.365801
+      value: 9.365796
       objectReference: {fileID: 0}
     - target: {fileID: 1892721488454516351, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
       propertyPath: m_Name
@@ -85,3 +97,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
+--- !u!1 &8392666169584079621 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1892721488403298919, guid: 95b0cbf3f20491141abd2fa40e943881, type: 3}
+  m_PrefabInstance: {fileID: 7943489101489613154}
+  m_PrefabAsset: {fileID: 0}
+--- !u!251 &6858231368492732801
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392666169584079621}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 0
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

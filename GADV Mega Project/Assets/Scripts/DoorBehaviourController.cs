@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class DoorBehaviourController : MonoBehaviour
@@ -16,6 +17,8 @@ public class DoorBehaviourController : MonoBehaviour
 
     Vector3 doorClosedPos;
     Vector3 doorOpenPos;
+    SpriteRenderer sr;
+    BoxCollider2D boxCollider;
     private float doorSpeed = 10f;
     private bool playerCanInteract = false;
 
@@ -25,6 +28,8 @@ public class DoorBehaviourController : MonoBehaviour
     {
         doorClosedPos = transform.position;
         doorOpenPos = new Vector3(transform.position.x,transform.position.y + doorOffset, transform.position.y);
+        sr = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -72,10 +77,15 @@ public class DoorBehaviourController : MonoBehaviour
 
     void OpenDoor()
     {
-        if (transform.position != doorOpenPos)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, doorOpenPos, doorSpeed * Time.deltaTime);
-        }
+        //if (transform.position != doorOpenPos)
+        //{
+        //    transform.position = Vector3.MoveTowards(transform.position, doorOpenPos, doorSpeed * Time.deltaTime);
+        //}
+        Color currentColour = sr.color;
+        currentColour.a = 0.3f;
+        sr.color = currentColour;
+        boxCollider.enabled = false;
+        
     }
 
     void CloseDoor()

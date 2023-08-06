@@ -12,6 +12,7 @@ TagManager:
   - Keys
   - Checkpoint
   - OneWayPlatform
+  - Ladder
   layers:
   - Default
   - TransparentFX

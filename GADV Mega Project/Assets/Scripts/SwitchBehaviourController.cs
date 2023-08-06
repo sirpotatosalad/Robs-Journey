@@ -62,7 +62,7 @@ public class SwitchBehaviourController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PhysObj"))
+        if (collision.CompareTag("PhysObj") || collision.CompareTag("Throwable"))
         {
             Debug.Log("Obj on switch");
             isPhysObjOnSwitch = true;

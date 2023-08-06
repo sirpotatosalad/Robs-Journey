@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded()
     {
         //casts a box the size of player's box collider beneath player gameobject 
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.05f, groundLayer);
         //returns false if the collider is colliding with a gameObject 
         return raycastHit.collider != null;
     }
