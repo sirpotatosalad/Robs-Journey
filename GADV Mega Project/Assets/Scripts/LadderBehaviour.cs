@@ -12,11 +12,12 @@ public class LadderBehaviour : MonoBehaviour
     private bool isClimbing;
 
     [SerializeField] private Rigidbody2D rb;
+    private ObjectInteractionController interactionController;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        interactionController = this.GetComponent<ObjectInteractionController>();
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class LadderBehaviour : MonoBehaviour
     {
         vertical = Input.GetAxis("Vertical");
 
-        if (isLadder && Mathf.Abs(vertical) > 0f)
+        if (isLadder && Mathf.Abs(vertical) > 0f && !interactionController.isGrabbing)
         {
             isClimbing = true;
         }

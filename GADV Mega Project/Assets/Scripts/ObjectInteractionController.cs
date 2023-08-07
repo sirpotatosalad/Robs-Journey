@@ -46,9 +46,11 @@ public class ObjectInteractionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isGrabbing)
+        // check if the player is grabbing any object
+        if (isGrabbing && grabbedObj != null)
         {
-            if (Input.GetKeyDown(KeyCode.R) && grabbedObj != null)
+            // toggle between throwing and grab mode if player is grabbing an object
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 ToggleThrowing();
             }
@@ -61,6 +63,7 @@ public class ObjectInteractionController : MonoBehaviour
         }
         else
         {
+            //allow the player to grab an object
             if (Input.GetKey(KeyCode.E)) 
             {
                 GrabObject();
@@ -90,15 +93,18 @@ public class ObjectInteractionController : MonoBehaviour
     {
 
         lr = grabbedObj.GetComponent<LineRenderer>();
-
+        //simple switch statement
         isThrowing = !isThrowing;
         if(isThrowing) 
         {
+            //set the position of the object to throwing position
             grabbedObj.transform.position = throwPos.position;
             Debug.Log("Ready to throw");
         }
         else
         {
+            //disable the line-renderer (if any) and sets the position of the object back to grab position.
+            // this also acts as a throw cancel
             lr.enabled = false;
             grabbedObj.transform.position = grabPos.position;
             Debug.Log("Returned to grab");

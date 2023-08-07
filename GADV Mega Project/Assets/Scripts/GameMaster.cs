@@ -29,6 +29,7 @@ public class GameMaster : MonoBehaviour
 
     public HealthController player;
     public Transform currentCheckpoint;
+    public bool isRunning;
 
     [SerializeField]
     private CheckpointBehaviour triggerDetection;
@@ -60,6 +61,7 @@ public class GameMaster : MonoBehaviour
 
         currentCheckpoint = spawnPoint;
 
+        isRunning = true;
 
     }
 
@@ -82,10 +84,12 @@ public class GameMaster : MonoBehaviour
             if (isPaused)
             {
                 pauseUi.SetActive(true);
+                playerPrefab.GetComponent<PlayerController>().enabled = false;
             }
             else
             {
                 pauseUi.SetActive(false);
+                playerPrefab.GetComponent<PlayerController>().enabled = true;
             }
         }
 
@@ -102,8 +106,10 @@ public class GameMaster : MonoBehaviour
     public void EndGame()
     {
         gameOverUi.SetActive(true);
+        isRunning = false;
     }
 
+    // coroutine in place to allow a spawn delay, punishing players who respawn to the last checkpoint
     public IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(spawnDelay);
@@ -136,6 +142,7 @@ public class GameMaster : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        isRunning = true;
     }
 
     public void LastCheckpoint()
@@ -145,6 +152,7 @@ public class GameMaster : MonoBehaviour
             Debug.Log("teleporting player to last checkpoint");
         }
         StartCoroutine(RespawnPlayer());
+        isRunning = true;
     }
 
 }

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     private float coyoteTime = 0.2f;
     private float coyoteTimeCount;
-    private float jumpDelay = 0.2f;
+    private float jumpDelay = 1f;
     private float jumpDelayCount;
     private bool isFacingRight = true;
     private Animator anim;
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
             jumpDelayCount = 0f;
         }
 
-        if (jumpDelayCount > 0f && rb.velocity.y > 0f)
+        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             coyoteTimeCount = 0f;
