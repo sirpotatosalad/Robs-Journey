@@ -201,7 +201,7 @@ public class ObjectInteractionController : MonoBehaviour
         Vector2 gravity = Physics2D.gravity;
 
         // with the help of some prior knowledge of physics and ChatGPT, I make use of the kinetic equation of motion for an object in free fall
-        // after calculation, it simply returns the Vector2 for that specific frame.
+        // after calculation, it simply returns the Vector2 for that specific point in flight.
         Vector2 pos = initPos + velocity * time + 0.5f * gravity * time * time;
         return pos;
     }

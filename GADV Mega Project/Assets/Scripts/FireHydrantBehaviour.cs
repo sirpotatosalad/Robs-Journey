@@ -30,7 +30,7 @@ public class FireHydrantBehaviour : MonoBehaviour
 
     private IEnumerator ActivateWaterSpout()
     {
-        while (!GameMaster.gm.isRunning)
+        while (!playerPrefab.isDead)
         {
             isActive = true;
             waterSpout.SetActive(true); // Enable the water spout collider.

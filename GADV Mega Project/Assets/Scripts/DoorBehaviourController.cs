@@ -42,6 +42,7 @@ public class DoorBehaviourController : MonoBehaviour
             {
                 isLocked = false;
                 doorIsOpen = true;
+                InventoryManager.inventoryManager.RemoveItem(requiredKey);
             }
             else if (isLocked)
             {

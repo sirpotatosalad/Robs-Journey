@@ -13,6 +13,7 @@ TagManager:
   - Checkpoint
   - OneWayPlatform
   - Ladder
+  - Exit
   layers:
   - Default
   - TransparentFX

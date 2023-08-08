@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CheckpointBehaviour : MonoBehaviour
 {
-    public delegate void TriggerEventHandler(Collider2D collider);
-    public event TriggerEventHandler OnTriggerEvent;
+    public delegate void TriggerEventHandler(Collider2D collision);
+    public event TriggerEventHandler OnCheckpointEvent;
 
 
 
@@ -18,8 +18,8 @@ public class CheckpointBehaviour : MonoBehaviour
             //find the GameMaster object and set the current checkpoint to the position of the current one
             GameMaster gameMaster = GameObject.FindObjectOfType<GameMaster>();
             gameMaster.currentCheckpoint.position = transform.position;
-            Debug.Log("Checkpoint set to:" + transform.position);
-            OnTriggerEvent?.Invoke(collision);
+            Debug.Log("Player crossed checkpoint @:" + transform.position);
+            OnCheckpointEvent?.Invoke(collision);
         }
     }
 

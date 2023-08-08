@@ -14,25 +14,40 @@ public class GameMaster : MonoBehaviour
     private GameObject gameOverUi;
     [SerializeField] 
     private GameObject pauseUi;
+    [SerializeField] 
+    private GameObject gameEndUi;
     [SerializeField]
     private bool enableDevMode = false;
 
     public float spawnDelay = 2.0f;
-    public Transform playerPrefab;
-    public Transform playerCam;
-    public Transform spawnPoint;
-    public TextMeshProUGUI timerText;
+    [SerializeField]
+    private Transform playerPrefab;
+    [SerializeField]
+    private Transform playerCam;
+    [SerializeField]
+    private Transform spawnPoint;
+    [SerializeField]
+    private TextMeshProUGUI timerText;
+    [SerializeField]
+    private TextMeshProUGUI pauseTimerText;
+    [SerializeField]
+    private TextMeshProUGUI deadTimerText;
+    [SerializeField]
+    private HealthController player;
+    [SerializeField]
+    private GameObject endZone;
 
     private float timerTime = 0f;
     
     private Animator anim;
 
-    public HealthController player;
+    
     public Transform currentCheckpoint;
-    public bool isRunning;
 
     [SerializeField]
-    private CheckpointBehaviour triggerDetection;
+    private CheckpointBehaviour checkpointDetection;
+    [SerializeField]
+    private EndZoneController endZoneDetection;
 
     private bool isPaused;
 
@@ -56,18 +71,21 @@ public class GameMaster : MonoBehaviour
             playerPrefab.position = spawnPoint.position;
         }
 
-       
-        triggerDetection.OnTriggerEvent += OnTriggerEventOccured;
+
+
+        checkpointDetection.OnCheckpointEvent += OnCheckpointEventOccured;
+        endZoneDetection.OnLevelEndEvent += OnLevelEndOccured;
+   
+
 
         currentCheckpoint = spawnPoint;
-
-        isRunning = true;
 
     }
 
     void Update()
     {
         //timer only runs when player is alive
+
         if (!player.isDead && !isPaused)
         {
             // adds time passed to timerTime, which is a variable to store time value in seconds
@@ -77,7 +95,14 @@ public class GameMaster : MonoBehaviour
             // takes the TimeSpan obj and converts it into string, with a format of minutes:seconds:milliseconds
             timerText.text = time.ToString(@"mm\:ss\:fff");
         }
+        else
+        {
+            TimeSpan time = TimeSpan.FromSeconds(timerTime);
+            pauseTimerText.text = time.ToString(@"mm\:ss\:fff");
+            deadTimerText.text = time.ToString(@"mm\:ss\:fff");
+        }
         
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
@@ -100,13 +125,18 @@ public class GameMaster : MonoBehaviour
     public static void KillPlayer(HealthController player)
     {
         player.StartCoroutine(KillPlayerWithDelay(player));
-        gm.EndGame();
+        gm.LoseGame();
     }
 
-    public void EndGame()
+    public void LoseGame()
     {
         gameOverUi.SetActive(true);
-        isRunning = false;
+        isPaused = true;
+    }
+
+    private void EndGame()
+    {
+        gameEndUi.SetActive(true);
     }
 
     // coroutine in place to allow a spawn delay, punishing players who respawn to the last checkpoint
@@ -119,9 +149,14 @@ public class GameMaster : MonoBehaviour
         Debug.Log("Player respawned");
     }
 
-    private void OnTriggerEventOccured(Collider2D collision)
+    private void OnCheckpointEventOccured(Collider2D collision)
     {
         Debug.Log("new checkpoint set to: " + currentCheckpoint);
+    }
+
+    private void OnLevelEndOccured(Collider2D collision)
+    {
+        Debug.Log("Game is now ending.");
     }
 
 
@@ -142,7 +177,7 @@ public class GameMaster : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        isRunning = true;
+        isPaused = false;
     }
 
     public void LastCheckpoint()
@@ -152,7 +187,7 @@ public class GameMaster : MonoBehaviour
             Debug.Log("teleporting player to last checkpoint");
         }
         StartCoroutine(RespawnPlayer());
-        isRunning = true;
+        isPaused = false;
     }
 
 }
