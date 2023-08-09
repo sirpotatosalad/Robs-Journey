@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
+    //making a static variable for GameMaster
     public static GameMaster gm;
 
     [SerializeField]
@@ -16,14 +17,14 @@ public class GameMaster : MonoBehaviour
     private GameObject pauseUi;
     [SerializeField] 
     private GameObject gameEndUi;
+
+
     [SerializeField]
     private bool enableDevMode = false;
 
-    public float spawnDelay = 2.0f;
     [SerializeField]
     private Transform playerPrefab;
-    [SerializeField]
-    private Transform playerCam;
+
     [SerializeField]
     private Transform spawnPoint;
     [SerializeField]
@@ -33,27 +34,24 @@ public class GameMaster : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI deadTimerText;
     [SerializeField]
+    private TextMeshProUGUI endTimerText;
+    [SerializeField]
     private HealthController player;
     [SerializeField]
     private GameObject endZone;
-
-    private float timerTime = 0f;
-    
-    private Animator anim;
 
     
     public Transform currentCheckpoint;
 
     [SerializeField]
-    private CheckpointBehaviour checkpointDetection;
-    [SerializeField]
     private EndZoneController endZoneDetection;
 
     private bool isPaused;
+    private float timerTime = 0f;
 
     void Awake()
     {
-        // making the gamemaster a singleton
+        // making the gamemaster a singleton (i.e., a singular instance)
         if (gm == null)
         {
             gm = this;
@@ -63,21 +61,17 @@ public class GameMaster : MonoBehaviour
             Destroy(gameObject);
         }
 
-        anim = playerPrefab.GetComponent<Animator>();
 
-        
+        //dev mode simply allows me to move around the player without teleporting me back to the spawn position
+        // if the game starts elsewhere other than the start, this may possibly be left on without me noticing
         if (!enableDevMode)
         {
             playerPrefab.position = spawnPoint.position;
         }
 
-
-
-        checkpointDetection.OnCheckpointEvent += OnCheckpointEventOccured;
+        // subscribing the GameMaster to the EndZoneController's event
         endZoneDetection.OnLevelEndEvent += OnLevelEndOccured;
-   
-
-
+  
         currentCheckpoint = spawnPoint;
 
     }
@@ -97,15 +91,20 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
+            // sets the text for the PauseTimer, DeadTimer and EndTimer only when the game is either paused or the player is dead
             TimeSpan time = TimeSpan.FromSeconds(timerTime);
             pauseTimerText.text = time.ToString(@"mm\:ss\:fff");
             deadTimerText.text = time.ToString(@"mm\:ss\:fff");
+            endTimerText.text = time.ToString(@"mm\:ss\:fff");
+
         }
         
-
+        // Pauses the game by pressing Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            //toggle between true and false states when Escape key is pressed
             isPaused = !isPaused;
+            // when paused, it will set the pauseUi to be active and disable the PlayerController script on the playerPrefab
             if (isPaused)
             {
                 pauseUi.SetActive(true);
@@ -122,12 +121,15 @@ public class GameMaster : MonoBehaviour
 
     }
 
+    //method is specifically in public static void to allow the HealthController to kill the player without creating another instance of GameMaster.
     public static void KillPlayer(HealthController player)
     {
         player.StartCoroutine(KillPlayerWithDelay(player));
         gm.LoseGame();
     }
 
+
+    //LoseGame() and EndGame() simply enables their respective Uis when called and pauses the game
     public void LoseGame()
     {
         gameOverUi.SetActive(true);
@@ -137,26 +139,32 @@ public class GameMaster : MonoBehaviour
     private void EndGame()
     {
         gameEndUi.SetActive(true);
+        isPaused = true;
     }
 
-    // coroutine in place to allow a spawn delay, punishing players who respawn to the last checkpoint
-    public IEnumerator RespawnPlayer()
+    //function to handle respawning the player in GameMaster
+    public void RespawnPlayer()
     {
-        yield return new WaitForSeconds(spawnDelay);
+        //sets the players position to the last checkpoint they reached.
         playerPrefab.position = currentCheckpoint.position;
-        player.RespawnPlayer();
         gameOverUi.SetActive(false);
+        // penalty of 2.5s after respawning
+        timerTime += 2.5f;
+        //uses RespawnPlayer() in HealthController
+        player.RespawnPlayer();
         Debug.Log("Player respawned");
     }
 
-    private void OnCheckpointEventOccured(Collider2D collision)
+    // handling the LevelEndEvent that the script was subscribed to
+    private void OnLevelEndOccured(bool isCompleted)
     {
-        Debug.Log("new checkpoint set to: " + currentCheckpoint);
-    }
-
-    private void OnLevelEndOccured(Collider2D collision)
-    {
-        Debug.Log("Game is now ending.");
+        // disables the PlayerController script and executes EndGame()
+        if (isCompleted)
+        {
+            playerPrefab.GetComponent<PlayerController>().enabled = false;
+            Debug.Log("Game is now ending.");
+            EndGame();
+        } 
     }
 
 
@@ -168,25 +176,25 @@ public class GameMaster : MonoBehaviour
 
     }
 
+    //these next few functions handle the buttons in each of the Ui screens where applicable (Pause, Death and Complete)
 
+    // quits to the MainMenu scene by taking this scene's buildIndex - 1
     public void QuitToMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
     }
 
+    // resets the entire level by reloading the current scene
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         isPaused = false;
     }
 
+    // respawns the player to the previous checkpoint (if any) and unpauses the game
     public void LastCheckpoint()
     {
-        if (currentCheckpoint != spawnPoint)
-        {
-            Debug.Log("teleporting player to last checkpoint");
-        }
-        StartCoroutine(RespawnPlayer());
+        RespawnPlayer();
         isPaused = false;
     }
 

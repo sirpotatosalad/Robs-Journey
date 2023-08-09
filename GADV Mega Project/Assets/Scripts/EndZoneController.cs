@@ -6,19 +6,23 @@ public class EndZoneController : MonoBehaviour
 {
     [SerializeField]
     InventoryManager.AllItems requiredKey;
+    private bool gateInteractable;
 
-    public delegate void TriggerEventHandler(Collider2D collision);
+    //these are for handling the LevelEndEvent where the player unlocks the gate at the end of the level
+    // the delegate will send over a boolean whether or not the player has done so
+    public delegate void TriggerEventHandler(bool isCompleted);
     public event TriggerEventHandler OnLevelEndEvent;
 
-
-    private void OnTriggerStay2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        // this block checks whether the player has the required Key to open the gate
+        // it uses the same function in DoorBehaviourController
+        if (Input.GetKeyDown(KeyCode.E) && gateInteractable)
         {
             if (HasKey(requiredKey))
             {
                 Debug.Log("You did it! Get outta here.");
-                OnLevelEndEvent?.Invoke(collision);
+                OnLevelEndEvent?.Invoke(true);
             }
             else if (!HasKey(requiredKey))
             {
@@ -28,6 +32,26 @@ public class EndZoneController : MonoBehaviour
         }
     }
 
+
+    // same use as the DoorBehaviourController script, where these two Trigger functions check whether the player is in the gate's trigger collider
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+           gateInteractable = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+            gateInteractable = false;
+        }
+    }
+
+
+    // Checks the player's inventory from inventoryManager singleton for the required key.
     public bool HasKey(InventoryManager.AllItems itemRequired)
     {
         if (InventoryManager.inventoryManager.invItems.Contains(itemRequired))

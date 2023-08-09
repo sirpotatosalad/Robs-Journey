@@ -9,7 +9,9 @@ public class JointBreak : MonoBehaviour
     private DistanceJoint2D dj;
     private GameObject parentObj;
 
-
+    // making an event for when a thrown object collides with the rope segments
+    // this was made very early in development, and i now realise that this can probably be done more simply in one script
+    // unfortunately i no longer have time to attempt to merge this script with RopeController
     public delegate void CollisionEventHandler(Collision2D collision);
     public event CollisionEventHandler OnCollisionEvent;
 
@@ -26,7 +28,8 @@ public class JointBreak : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        // when a "Throwable" tagged object collides with the rope segment above a certain velocity, it breaks the rope and broadcasts the event
+        // this is done in BreakHinge()
         if (collision.gameObject.CompareTag("Throwable") && enabled)
         {
             if (collision.relativeVelocity.magnitude >= 5f)
@@ -39,6 +42,7 @@ public class JointBreak : MonoBehaviour
             
     }
 
+    //this method "breaks" the rope by disabling the hinge joint components at this specifc segment AND the distance joint at the parent
     void BreakHinge()
     {
         hj.enabled = false;

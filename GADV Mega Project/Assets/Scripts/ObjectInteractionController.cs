@@ -70,19 +70,21 @@ public class ObjectInteractionController : MonoBehaviour
             }
         }
 
-        if (isThrowing && !Input.GetMouseButton(1))
+        //allows the player to throw the object using LMB if they are in "throwing mode"
+        if (isThrowing)
         {
+            // calculates the throwing vector when LMB is held down
             if (Input.GetMouseButton(0))
             {
                 CalculateVector();
             }
+            //throws the object once LMB is let go
             else if (Input.GetMouseButtonUp(0))
             {
-                lr.enabled = false;
+               
                 ThrowObject();
                 isThrowing = false;
                 isGrabbing = false;
-                grabbedObj = null;
             }
         }
 
@@ -93,7 +95,7 @@ public class ObjectInteractionController : MonoBehaviour
     {
 
         lr = grabbedObj.GetComponent<LineRenderer>();
-        //simple switch statement
+        //simple switch statement to toggle between false and true
         isThrowing = !isThrowing;
         if(isThrowing) 
         {
@@ -209,10 +211,18 @@ public class ObjectInteractionController : MonoBehaviour
     void ThrowObject()
     {
         rb = grabbedObj.GetComponent<Rigidbody2D>();
+        lr = grabbedObj.GetComponent<LineRenderer>();
 
         Debug.Log("Throwing");
+
+        //disable the line renderer on the grabbed object
+        lr.enabled = false;
+        //similar to ReleaseObject(), this is to undo any changes done to the object when it is grabbed
+        //letting Unity's physics engine take over again
         grabbedObj.GetComponent<Rigidbody2D>().isKinematic = false;
+        grabbedObj = null;
         grabbedObj.transform.SetParent(null);
+        // using the formula for velocity, dividing the throwingVector of the object by its mass
         rb.velocity = throwingVector / rb.mass;
     }
 

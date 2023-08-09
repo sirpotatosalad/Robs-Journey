@@ -14,17 +14,15 @@ public class LadderBehaviour : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     private ObjectInteractionController interactionController;
 
-    // Start is called before the first frame update
     void Start()
     {
         interactionController = this.GetComponent<ObjectInteractionController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         vertical = Input.GetAxis("Vertical");
-
+        //if the player is "using" a ladder, set isClimbing bool to true
         if (isLadder && Mathf.Abs(vertical) > 0f && !interactionController.isGrabbing)
         {
             isClimbing = true;
@@ -33,8 +31,11 @@ public class LadderBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (isClimbing)
         {
+            //when isClimbing, remove gravity acting on player
+            //simulate climbing up by floating player up by adding velocity upward.
             rb.gravityScale = 0f;
             rb.velocity = new Vector2 (rb.velocity.x, vertical * speed);
         }
@@ -44,7 +45,7 @@ public class LadderBehaviour : MonoBehaviour
         }
     }
 
-
+    // the OnTriggerEnter and OnTriggerExit check if the player is inside the ladder's trigger, rendering them to be "using" the ladder
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
