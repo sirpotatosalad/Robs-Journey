@@ -9,9 +9,10 @@ public class SwitchBehaviourController : MonoBehaviour
 
     [SerializeField] DoorBehaviourController doorBehaviour;
 
-    [SerializeField] bool isDoorOpenSwitch;
-    [SerializeField] bool isDoorCloseSwitch;
-    [SerializeField] bool isPlayerInteractable;
+    [SerializeField] private bool isDoorOpenSwitch;
+    [SerializeField] private bool isDoorCloseSwitch;
+    [SerializeField] private bool isPlayerInteractable;
+    [SerializeField] private AudioClip doorOpenSound;
 
     private float switchSizeY;
     private Vector3 switchUpPos;
@@ -80,10 +81,12 @@ public class SwitchBehaviourController : MonoBehaviour
 
             if (isDoorOpenSwitch && !doorBehaviour.doorIsOpen)
             {
+                SoundManager.instance.PlaySound(doorOpenSound);
                 doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
             }
             else if (isDoorCloseSwitch && doorBehaviour.doorIsOpen)
             {
+                SoundManager.instance.PlaySound(doorOpenSound);
                 doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
             }
 
@@ -102,10 +105,12 @@ public class SwitchBehaviourController : MonoBehaviour
 
                 if (isDoorOpenSwitch && !doorBehaviour.doorIsOpen)
                 {
+                    SoundManager.instance.PlaySound(doorOpenSound);
                     doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
                 }
                 else if (isDoorCloseSwitch && doorBehaviour.doorIsOpen)
                 {
+                    SoundManager.instance.PlaySound(doorOpenSound);
                     doorBehaviour.doorIsOpen = !doorBehaviour.doorIsOpen;
                 }
             }

@@ -17,6 +17,8 @@ public class HealthController : MonoBehaviour
 
 
     [SerializeField] private float iFrameDuration;
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip deathSound;
 
 
 
@@ -48,6 +50,7 @@ public class HealthController : MonoBehaviour
         if (currentHealth > 0)
         {
             // set the "isHurt" trigger in animator to play out the hurt animation
+            SoundManager.instance.PlaySound(hurtSound);
             anim.SetTrigger("isHurt");
             StartCoroutine(IFrames());
         }
@@ -55,6 +58,7 @@ public class HealthController : MonoBehaviour
         {
             if (!isDead)
             {
+                SoundManager.instance.PlaySound(deathSound);
                 // set the "isDead" trigger to play out the death animation
                 anim.SetTrigger("isDead");
                 // disable the PlayerController script to prevent player from moving after death

@@ -5,10 +5,13 @@ using UnityEngine;
 public class CheckpointBehaviour : MonoBehaviour
 {
 
+    [SerializeField] private AudioClip checkpointSound;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            SoundManager.instance.PlaySound(checkpointSound);
             // disables the collider component of the checkpoint, rendering the checkpoint used.
             this.GetComponent<Collider2D>().enabled = false;
             //find the GameMaster singleton and set currentCheckpoint to the position of this checkpoint.

@@ -5,11 +5,13 @@ using UnityEngine;
 public class ObjectInteractionController : MonoBehaviour
 {
     [SerializeField]
+    //position of gameobject in grab mode
     private Transform grabPos;
     [SerializeField]
     //initial ray position for grab detection
     private Transform rayPos;
     [SerializeField]
+    //position for gameobject in throwing mode
     private Transform throwPos;
 
     [SerializeField]
@@ -27,12 +29,18 @@ public class ObjectInteractionController : MonoBehaviour
     private Rigidbody2D rb;
     private LineRenderer lr;
 
+    //inspector settings for vector calculation
     [SerializeField]
     private float maxMouseDist = 10.0f;
     [SerializeField]
     private int numberOfPoints = 20;
     [SerializeField]
     private float timeBetweenPoints = 0.1f;
+
+ 
+    [SerializeField] private AudioClip throwSound;
+    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private AudioClip swapModeSound;
 
 
 
@@ -98,6 +106,7 @@ public class ObjectInteractionController : MonoBehaviour
         lr = grabbedObj.GetComponent<LineRenderer>();
         //simple switch statement to toggle between false and true
         isThrowing = !isThrowing;
+        SoundManager.instance.PlaySound(swapModeSound);
         if(isThrowing) 
         {
             //set the position of the object to throwing position
@@ -126,6 +135,7 @@ public class ObjectInteractionController : MonoBehaviour
             //'grab' gameobject when hands are empty
             if (Input.GetKeyDown(KeyCode.E) && grabbedObj == null && !isGrabbing)
             {
+                SoundManager.instance.PlaySound(pickupSound);
                 //get gameObj infront of collider
                 grabbedObj = hitInfo.collider.gameObject;
                 //set state of grabbed obj's rigidbody to kinematic
@@ -216,6 +226,7 @@ public class ObjectInteractionController : MonoBehaviour
 
         Debug.Log("Throwing");
 
+        SoundManager.instance.PlaySound(throwSound);
         //disable the line renderer on the grabbed object
         lr.enabled = false;
         //similar to ReleaseObject(), this is to undo any changes done to the object when it is grabbed

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameMaster : MonoBehaviour
 {
     //making a static variable for GameMaster
-    public static GameMaster gm;
+    public static GameMaster gm { get; private set; }
 
     [SerializeField]
     private GameObject gameOverUi;
@@ -43,15 +43,19 @@ public class GameMaster : MonoBehaviour
     
     public Transform currentCheckpoint;
 
+    public delegate void TriggerEventHandler(bool isRespawning);
+    public event TriggerEventHandler RespawnEvent;
+
     [SerializeField]
     private EndZoneController endZoneDetection;
+    [SerializeField] private AudioClip endGameSound;
 
     private bool isPaused;
     private float timerTime = 0f;
 
     void Awake()
     {
-        // making the gamemaster a singleton (i.e., a singular instance)
+        // making the gamemaster a singleton pattern
         if (gm == null)
         {
             gm = this;
@@ -152,6 +156,7 @@ public class GameMaster : MonoBehaviour
         timerTime += 2.5f;
         //uses RespawnPlayer() in HealthController
         player.RespawnPlayer();
+        RespawnEvent?.Invoke(true);
         Debug.Log("Player respawned");
     }
 
@@ -162,6 +167,7 @@ public class GameMaster : MonoBehaviour
         if (isCompleted)
         {
             playerPrefab.GetComponent<PlayerController>().enabled = false;
+            SoundManager.instance.PlaySound(endGameSound);
             Debug.Log("Game is now ending.");
             EndGame();
         } 

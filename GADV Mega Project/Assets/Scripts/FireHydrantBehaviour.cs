@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// this script is called FireHydrantBehaviour, but I decided to use it for my generator trap as well.
+// I didnt want to break my code through renaming scripts, so the name is a little strange.
+
 public class FireHydrantBehaviour : MonoBehaviour
 {
     [SerializeField] private float activationInterval = 2.0f;
@@ -17,13 +20,12 @@ public class FireHydrantBehaviour : MonoBehaviour
     private HealthController playerPrefab;
 
 
-    // currently, this is the most problematic script
-    // the FireHydrants and Generators DO NOT reactivate upon respawning
-
     private void Start()
     {       
         waterSpout.SetActive(false); // Disable the water spout collider initially.
         StartCoroutine(ActivateWaterSpout());
+
+        GameMaster.gm.RespawnEvent += OnRespawnOccured;
     }
 
     //the coroutine is currently called in Start(). this may change if i find a better method that is more reliable
@@ -32,12 +34,12 @@ public class FireHydrantBehaviour : MonoBehaviour
         while (!playerPrefab.isDead)
         {
             //activates and deactivates the trap within set intervals,
-            // also does so for the waterSpout object to show the trap activating
+            // also does so for the waterSpout object to show the trap activating by setting the gameObject between SetActive states
             isActive = true;
-            waterSpout.SetActive(true); // Enable the water spout collider.
+            waterSpout.SetActive(true);
             yield return new WaitForSeconds(activationInterval);
             isActive = false;
-            waterSpout.SetActive(false); // Disable the water spout collider.
+            waterSpout.SetActive(false);
             yield return new WaitForSeconds(activationInterval);
         }
         
@@ -54,6 +56,15 @@ public class FireHydrantBehaviour : MonoBehaviour
 
         }
 
+    }
+
+    //make use of the RespawnEvent in GameMaster to start up the main coroutine that makes the trap timed.
+    private void OnRespawnOccured(bool isRespawning)
+    {
+        if (isRespawning)
+        {
+            StartCoroutine(ActivateWaterSpout());
+        }
     }
 
 

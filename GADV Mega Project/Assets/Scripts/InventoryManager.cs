@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    // making a static variable for inventoryManger
-    public static InventoryManager inventoryManager;
+    // making a static variable for inventoryManger instance
+    public static InventoryManager inventoryManager { get; private set; }
     
     // making a public list of all items currently in the player's inventory
     public List<AllItems> invItems = new List<AllItems>();
 
     void Awake()
     {
-        // making it so that only one instance of inventoryManager exists at a time
+        // making inventoryManager a singleton pattern
         if (inventoryManager == null)
         {
             inventoryManager = this;

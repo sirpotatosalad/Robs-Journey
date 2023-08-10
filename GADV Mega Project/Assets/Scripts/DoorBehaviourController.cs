@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
+using UnityEditor;
 using UnityEngine;
 
 public class DoorBehaviourController : MonoBehaviour
@@ -13,6 +13,8 @@ public class DoorBehaviourController : MonoBehaviour
     public bool doorIsOpen = false;
     [SerializeField]
     private bool isInteractable;
+    [SerializeField]
+    private AudioClip doorUnlock;
 
     SpriteRenderer sr;
     BoxCollider2D boxCollider;
@@ -35,6 +37,7 @@ public class DoorBehaviourController : MonoBehaviour
         {
             if (isInteractable && HasKey(requiredKey))
             {
+                SoundManager.instance.PlaySound(doorUnlock);
                 doorIsOpen = true;
                 InventoryManager.inventoryManager.RemoveItem(requiredKey);
             }

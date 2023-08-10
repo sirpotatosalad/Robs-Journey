@@ -8,6 +8,7 @@ public class JointBreak : MonoBehaviour
     private HingeJoint2D hj;
     private DistanceJoint2D dj;
     private GameObject parentObj;
+    [SerializeField] private AudioClip ropeCutSound;
 
     // making an event for when a thrown object collides with the rope segments
     // this was made very early in development, and i now realise that this can probably be done more simply in one script
@@ -34,6 +35,7 @@ public class JointBreak : MonoBehaviour
         {
             if (collision.relativeVelocity.magnitude >= 5f)
             {
+                SoundManager.instance.PlaySound(ropeCutSound);
                 BreakHinge();
                 Debug.Log("Broken by " + collision.gameObject.name);
                 OnCollisionEvent?.Invoke(collision);

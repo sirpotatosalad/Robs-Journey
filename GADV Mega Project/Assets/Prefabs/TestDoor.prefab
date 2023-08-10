@@ -151,8 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cf0f30e3eb594458a23f616ab9e8da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorOffset: 5
   requiredKey: 0
   doorIsOpen: 0
   isInteractable: 0
-  isLocked: 0
+  doorUnlock: {fileID: 8300000, guid: a0ca8964c08d54c5dbebf245bdc474ca, type: 3}

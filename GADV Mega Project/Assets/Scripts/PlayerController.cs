@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f;
-    public float jumpForce = 15.0f;
-    public float fallSpeed = 5.0f;
-    public float frictionForce = 2.5f;
+    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float jumpForce = 15.0f;
+    [SerializeField] private AudioClip jumpSound;
+    
 
     private float horizontal;
     private float coyoteTime = 0.2f;
@@ -116,7 +116,8 @@ public class PlayerController : MonoBehaviour
         // checks if the jump delay and coyote time have reset,
         // allows the player to jump if so by adding velocity to the player's rb via jumpForce
         if (jumpDelayCount > 0f && coyoteTimeCount > 0f)
-        {   
+        {
+            SoundManager.instance.PlaySound(jumpSound);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpDelayCount = 0f;
         }

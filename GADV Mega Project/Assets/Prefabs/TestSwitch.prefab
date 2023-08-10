@@ -128,3 +128,4 @@ MonoBehaviour:
   isDoorOpenSwitch: 1
   isDoorCloseSwitch: 1
   isPlayerInteractable: 1
+  doorOpenSound: {fileID: 8300000, guid: a0ca8964c08d54c5dbebf245bdc474ca, type: 3}

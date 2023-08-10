@@ -136,6 +136,7 @@ MonoBehaviour:
   jumpForce: 12.5
   fallSpeed: 10
   frictionForce: 2.5
+  jumpSound: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -155,6 +156,8 @@ MonoBehaviour:
   fallBoundary: -20
   isDead: 0
   iFrameDuration: 1
+  hurtSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!114 &7300400134091685125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +194,9 @@ MonoBehaviour:
   maxMouseDist: 10
   numberOfPoints: 20
   timeBetweenPoints: 0.1
+  throwSound: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  pickupSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+  swapModeSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
 --- !u!50 &914766756248641933
 Rigidbody2D:
   serializedVersion: 4
