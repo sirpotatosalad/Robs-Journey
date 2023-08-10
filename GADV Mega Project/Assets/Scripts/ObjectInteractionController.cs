@@ -83,6 +83,7 @@ public class ObjectInteractionController : MonoBehaviour
             {
                
                 ThrowObject();
+                grabbedObj = null;
                 isThrowing = false;
                 isGrabbing = false;
             }
@@ -220,7 +221,6 @@ public class ObjectInteractionController : MonoBehaviour
         //similar to ReleaseObject(), this is to undo any changes done to the object when it is grabbed
         //letting Unity's physics engine take over again
         grabbedObj.GetComponent<Rigidbody2D>().isKinematic = false;
-        grabbedObj = null;
         grabbedObj.transform.SetParent(null);
         // using the formula for velocity, dividing the throwingVector of the object by its mass
         rb.velocity = throwingVector / rb.mass;
