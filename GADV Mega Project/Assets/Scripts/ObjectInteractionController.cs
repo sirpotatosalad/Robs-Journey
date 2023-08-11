@@ -151,9 +151,10 @@ public class ObjectInteractionController : MonoBehaviour
 
     }
 
+    //this method is to release the GrabbedObject() from the player
     void ReleaseObject()
     {
-        //undo changes done when grabbed
+        //undo all changes done to the object in GrabObject()
         isGrabbing = false;
         isThrowing = false;
         grabbedObj.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -168,7 +169,6 @@ public class ObjectInteractionController : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //taking the distance between the mouse and its initial position
         Vector2 distance = mousePos - transform.position;
-
         // this block allows the player to throw at varying forces based on how far they pull back the mouse
         // preventing the player from pulling back too much by clamping the distance they can pull the mouse back
         float clampedDist = Mathf.Clamp01(distance.magnitude / maxMouseDist);

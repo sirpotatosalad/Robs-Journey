@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         // it checks if the space key is held down and if the player is already jumping (i.e., has a velocity > 0f on the y axis)
         if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
         {
-            // the apex is modified by adding extra velocity to the player's rb
+            // the jumping height is modified by adding extra velocity to the player's rb
             // in this case, it will be by 0.5f * the player's current upward velocity
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             coyoteTimeCount = 0f;

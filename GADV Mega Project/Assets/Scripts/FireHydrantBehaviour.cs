@@ -28,7 +28,7 @@ public class FireHydrantBehaviour : MonoBehaviour
         GameMaster.gm.RespawnEvent += OnRespawnOccured;
     }
 
-    //the coroutine is currently called in Start(). this may change if i find a better method that is more reliable
+    //coroutine that emulates a timed trap working at a delay
     private IEnumerator ActivateWaterSpout()
     {
         while (!playerPrefab.isDead)

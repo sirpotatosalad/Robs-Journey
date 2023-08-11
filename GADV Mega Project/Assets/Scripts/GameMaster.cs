@@ -43,6 +43,9 @@ public class GameMaster : MonoBehaviour
     
     public Transform currentCheckpoint;
 
+
+    //as a way to circumvent the issue of the FireHydrantController script not working after the player respawns @ a checkpoint,
+    //i decided to make use of what i learned making events to let the FireHydrantController script know that the player has respawned to start the coroutine again
     public delegate void TriggerEventHandler(bool isRespawning);
     public event TriggerEventHandler RespawnEvent;
 
@@ -181,6 +184,8 @@ public class GameMaster : MonoBehaviour
         Debug.Log("Killed Player");
 
     }
+
+
 
     //these next few functions handle the buttons in each of the Ui screens where applicable (Pause, Death and Complete)
 

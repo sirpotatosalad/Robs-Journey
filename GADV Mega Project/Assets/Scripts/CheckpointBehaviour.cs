@@ -7,6 +7,7 @@ public class CheckpointBehaviour : MonoBehaviour
 
     [SerializeField] private AudioClip checkpointSound;
 
+    //detects when the player collides with checkpoint's trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

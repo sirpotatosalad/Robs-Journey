@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
     // public method to allow other scripts to access PlaySound()
     public void PlaySound(AudioClip sound)
     {
+        //plays the sound passed in by other scripts when the SoundManager instance is called through the SoundManager's audio source component
         source.PlayOneShot(sound);
     }
 
