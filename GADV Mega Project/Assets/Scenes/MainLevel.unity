@@ -2106,7 +2106,7 @@ MonoBehaviour:
   gameOverUi: {fileID: 1085965817}
   pauseUi: {fileID: 1819798935}
   gameEndUi: {fileID: 1240554534}
-  enableDevMode: 1
+  enableDevMode: 0
   playerPrefab: {fileID: 1159295030}
   spawnPoint: {fileID: 1945691254}
   timerText: {fileID: 1074958843}
